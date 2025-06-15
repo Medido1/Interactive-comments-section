@@ -1,12 +1,15 @@
 import iconPlus from "../assets/icon-plus.svg";
 import iconMinus from "../assets/icon-minus.svg";
 import iconReply from "../assets/icon-reply.svg";
-import { useEffect, useState } from "react";
+import deleteIcon from "../assets/icon-delete.svg";
+import editIcon from "../assets/icon-edit.svg";
+import {useState } from "react";
 
-function Comment({data}) {
+function Comment({data, isReply}) {
   const {user, createdAt, content, score, replies} = data;
   const [currentScore, setCurrentScore] = useState(score);
   const originalScore = score;
+  const mainUser =  "juliusomo";
 
   function incrementScore() {
     if (currentScore > originalScore) return;
@@ -27,10 +30,19 @@ function Comment({data}) {
             src={user.image.webp} alt={`${user.username} avatar`}
           />
           <p className="font-bold">{user.username}</p>
+          {user.username === mainUser && 
+            <div className="bg-blue-600 rounded-md text-white
+              px-2">
+              <p>you</p>
+            </div>
+          }
           <p>{createdAt}</p>
         </div>
         <p className="text-gray-500 my-4">
-          {content}
+          <span className="inline-block text-blue-700 font-bold mr-2">
+            {isReply ? `@${user.username}` : ""}
+          </span> 
+            {content}
         </p>
         <div className="flex justify-between">
           <div className="flex justify-between p-2 items-center gap-2 w-[30%] rounded-md
@@ -47,12 +59,26 @@ function Comment({data}) {
               <img src={iconMinus} alt="icon minus" />
             </button>
           </div>
-          <div
-            className="flex items-center gap-2 text-blue-700 font-bold text-lg
-              cursor-pointer">
-            <img src={iconReply} alt="reply icon" />
-            <p>Reply</p>
-          </div>
+          {user.username !== mainUser && 
+            <div
+              className="flex items-center gap-2 text-blue-700 font-bold text-lg
+                cursor-pointer">
+              <img src={iconReply} alt="reply icon" />
+              <p>Reply</p>
+            </div>
+          }
+          {user.username === mainUser &&
+            <div className="flex gap-4">
+              <button className="flex items-center gap-2 cursor-pointer">
+                <img src={deleteIcon} alt="delete icon" />
+                <p className="text-red-400 font-bold text-lg">Delete</p>
+              </button>
+              <button className="flex items-center gap-2 cursor-pointer">
+                <img src={editIcon} alt="edit icon" />
+                <p className="text-blue-700 font-bold text-lg">Edit</p>
+              </button>
+            </div>
+          }
         </div>
       </div>
       <ul className="pl-4 shadow-lg">
@@ -60,6 +86,7 @@ function Comment({data}) {
           <Comment 
             key={reply.id}
             data={reply}
+            isReply={true}
           />
         ))}
       </ul>
