@@ -33,8 +33,8 @@ function Comment({comment, isReply}) {
   }
 
   return (
-    <div className="bg-gray-100">
-      <div className="bg-white p-4 rounded-lg mb-4 relative">
+    <div className="bg-gray-100 relative">
+      <div className="bg-white p-4 rounded-lg mb-4 ">
         <div className="flex gap-4 items-center">
           <img
             className="h-10"
