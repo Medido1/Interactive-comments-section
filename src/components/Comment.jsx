@@ -3,9 +3,10 @@ import iconMinus from "../assets/icon-minus.svg";
 import iconReply from "../assets/icon-reply.svg";
 import deleteIcon from "../assets/icon-delete.svg";
 import editIcon from "../assets/icon-edit.svg";
-import {useState, useContext } from "react";
+import {useState} from "react";
 import DeleteModal from "./DeleteModal";
-import { AnimatePresence } from 'framer-motion';
+import Form from "./Form";
+import { div } from "framer-motion/client";
 
 function Comment({comment, isReply}) {
   const {user, createdAt, content, score, replies, id} = comment;
@@ -16,6 +17,9 @@ function Comment({comment, isReply}) {
   /* show modal */
   const [showModal, setShowModal] = useState(false); 
   const [currentId, setCurrentId] = useState("");
+
+  /* reply form */
+  const [showReplyForm, setShowReplyForm] = useState(false);
 
   function incrementScore() {
     if (currentScore > originalScore) return;
@@ -29,6 +33,11 @@ function Comment({comment, isReply}) {
   
   function deleteComment(id) {
     setShowModal(true);
+    setCurrentId(id)
+  }
+
+  function replyToComment(id) {
+    setShowReplyForm(true);
     setCurrentId(id)
   }
 
@@ -71,12 +80,14 @@ function Comment({comment, isReply}) {
             </button>
           </div>
           {user.username !== currentUser && 
-            <div
+            <button
+              onClick={() => replyToComment(id)}
+              type="button"
               className="flex items-center gap-2 text-blue-700 font-bold text-lg
                 cursor-pointer">
               <img src={iconReply} alt="reply icon" />
               <p>Reply</p>
-            </div>
+            </button>
           }
           {user.username === currentUser &&
             <div className="flex gap-4">
@@ -94,6 +105,13 @@ function Comment({comment, isReply}) {
           }
         </div>
       </div>
+      {showReplyForm &&
+        <div className="mb-4">
+          <Form 
+            isReply = {true}
+          />
+        </div>
+      }
       <ul className="pl-4 shadow-lg relative">
         {replies && replies.map(reply => (
           <Comment 
@@ -114,6 +132,7 @@ function Comment({comment, isReply}) {
           </div>
         </div>
       }
+     
     </div>
   )
 }

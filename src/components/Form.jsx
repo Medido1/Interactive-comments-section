@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import userAvatar from "/avatars/image-juliusomo.png";
 import {GlobalContext} from "../context/GlobalContext";
 
-function Form(){
+function Form({isReply}){
   const {data, setData} = useContext(GlobalContext)
   const [comment, setComment] = useState("")
 
@@ -51,10 +51,6 @@ function Form(){
     setComment("");
   }
 
-  useEffect(() => {
-    console.log(data);
-  }, [data])
-
   return (
     <form 
       onSubmit={submitComment}
@@ -78,7 +74,7 @@ function Form(){
           className="px-6 py-2 bg-blue-800 text-white rounded-lg 
             font-bold cursor-pointer"
           type="submit">
-          SEND
+          {isReply ? "REPLY" : "SEND"}
         </button>
       </div>
     </form>

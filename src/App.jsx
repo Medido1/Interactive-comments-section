@@ -17,7 +17,9 @@ function App() {
           />
         ))}
       </ul>
-      <Form />
+      <Form 
+        isReply = {false}
+      />
     </main>
   )
 }
