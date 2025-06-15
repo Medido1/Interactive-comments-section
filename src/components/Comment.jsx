@@ -1,15 +1,28 @@
 import iconPlus from "../assets/icon-plus.svg";
 import iconMinus from "../assets/icon-minus.svg";
+import { useState } from "react";
 
 function Comment({data}) {
-  const {user, createdAt, content, score} = data
+  const {user, createdAt, content, score} = data;
+  const [currentScore, setCurrentScore] = useState(score);
+  const originalScore = score;
+
+  function incrementScore() {
+    if (currentScore > originalScore) return;
+    setCurrentScore(prev => prev + 1);
+  }
+
+  function decrementScore() {
+    if (currentScore < originalScore) return;
+    setCurrentScore(prev => prev - 1)
+  }
 
   return (
     <div className="bg-white p-4 rounded-lg mb-4">
       <div className="flex gap-4 items-center">
         <img
           className="h-10"
-          src={user.image.webp} alt="avatar"
+          src={user.image.webp} alt={`${user.username} avatar`}
         />
         <p className="font-bold">{user.username}</p>
         <p>{createdAt}</p>
@@ -20,11 +33,15 @@ function Comment({data}) {
       <div>
         <div className="flex justify-between p-2 items-center gap-2 w-[30%] rounded-md
           bg-gray-100">
-          <button className="cursor-pointer">
+          <button 
+            onClick={incrementScore}
+            className="cursor-pointer">
             <img src={iconPlus} alt="icon plus" />
           </button>
-          <p className="text-blue-600 text-lg font-bold">{score}</p>
-          <button className="cursor-pointer">
+          <p className="text-blue-600 text-lg font-bold">{currentScore}</p>
+          <button
+            onClick={decrementScore}
+            className="cursor-pointer">
             <img src={iconMinus} alt="icon minus" />
           </button>
         </div>
