@@ -1,5 +1,6 @@
 import iconPlus from "../assets/icon-plus.svg";
 import iconMinus from "../assets/icon-minus.svg";
+import iconReply from "../assets/icon-reply.svg";
 import { useState } from "react";
 
 function Comment({data}) {
@@ -30,7 +31,7 @@ function Comment({data}) {
       <p className="text-gray-500 my-4">
         {content}
       </p>
-      <div>
+      <div className="flex justify-between">
         <div className="flex justify-between p-2 items-center gap-2 w-[30%] rounded-md
           bg-gray-100">
           <button 
@@ -38,12 +39,19 @@ function Comment({data}) {
             className="cursor-pointer">
             <img src={iconPlus} alt="icon plus" />
           </button>
-          <p className="text-blue-600 text-lg font-bold">{currentScore}</p>
+          <p className="text-blue-700 text-lg font-bold">{currentScore}</p>
           <button
             onClick={decrementScore}
             className="cursor-pointer">
             <img src={iconMinus} alt="icon minus" />
           </button>
+        </div>
+        <div 
+  
+          className="flex items-center gap-2 text-blue-700 font-bold text-lg
+            cursor-pointer">
+          <img src={iconReply} alt="reply icon" />
+          <p>Reply</p>
         </div>
       </div>
     </div>
