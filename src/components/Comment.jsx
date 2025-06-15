@@ -3,13 +3,15 @@ import iconMinus from "../assets/icon-minus.svg";
 import iconReply from "../assets/icon-reply.svg";
 import deleteIcon from "../assets/icon-delete.svg";
 import editIcon from "../assets/icon-edit.svg";
-import {useState } from "react";
+import {useState, useContext } from "react";
+import {GlobalContext} from "../context/GlobalContext";
 
-function Comment({data, isReply}) {
-  const {user, createdAt, content, score, replies} = data;
+function Comment({comment, isReply}) {
+  const {data, setData} = useContext(GlobalContext)
+  const {user, createdAt, content, score, replies, id} = comment;
   const [currentScore, setCurrentScore] = useState(score);
   const originalScore = score;
-  const mainUser =  "juliusomo";
+  const currentUser =  "juliusomo";
 
   function incrementScore() {
     if (currentScore > originalScore) return;
@@ -19,6 +21,27 @@ function Comment({data, isReply}) {
   function decrementScore() {
     if (currentScore < originalScore) return;
     setCurrentScore(prev => prev - 1)
+  }
+  
+  function deleteComment(id) {
+    const isComment = data.comments.some(comment => comment.id === id);
+
+    if (isComment) {
+      const updatedComments = data.comments.filter(comment => comment.id !== id);
+      setData(prev => ({...prev, comments: updatedComments}))
+      return;
+    }
+
+    // if its a reply
+    const updatedComments = data.comments.map(comment => {
+      if (comment.replies) {
+        const filtredReplies = comment.replies.filter(reply => reply.id !== id);
+        return {...comment, replies: filtredReplies}
+      }
+      return comment
+    })
+
+    setData(prev => ({...prev, comments: updatedComments}))
   }
 
   return (
@@ -30,7 +53,7 @@ function Comment({data, isReply}) {
             src={user.image.webp} alt={`${user.username} avatar`}
           />
           <p className="font-bold">{user.username}</p>
-          {user.username === mainUser && 
+          {user.username === currentUser && 
             <div className="bg-blue-600 rounded-md text-white
               px-2">
               <p>you</p>
@@ -59,7 +82,7 @@ function Comment({data, isReply}) {
               <img src={iconMinus} alt="icon minus" />
             </button>
           </div>
-          {user.username !== mainUser && 
+          {user.username !== currentUser && 
             <div
               className="flex items-center gap-2 text-blue-700 font-bold text-lg
                 cursor-pointer">
@@ -67,9 +90,11 @@ function Comment({data, isReply}) {
               <p>Reply</p>
             </div>
           }
-          {user.username === mainUser &&
+          {user.username === currentUser &&
             <div className="flex gap-4">
-              <button className="flex items-center gap-2 cursor-pointer">
+              <button 
+                onClick={() => deleteComment(id)}
+                className="flex items-center gap-2 cursor-pointer">
                 <img src={deleteIcon} alt="delete icon" />
                 <p className="text-red-400 font-bold text-lg">Delete</p>
               </button>
@@ -85,7 +110,7 @@ function Comment({data, isReply}) {
         {replies && replies.map(reply => (
           <Comment 
             key={reply.id}
-            data={reply}
+            comment={reply}
             isReply={true}
           />
         ))}

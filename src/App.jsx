@@ -1,24 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import './App.css'
 import Comment from './components/Comment';
+import {GlobalContext} from "./context/GlobalContext";
 
 function App() {
-  const [data, setData] = useState({});
-  const comments = data.comments;
-
-  useEffect(() => {
-    fetch("/data.json")
-      .then((res) => res.json())
-      .then((json) => setData(json))
-  }, [])
+  const {data} = useContext(GlobalContext)
 
   return (
     <main className='bg-gray-100 min-h-screen px-4 py-6'>
       <ul>
-        {comments && comments.map(comment => (
+        {data.comments && data.comments.map(comment => (
           <Comment 
             key={comment.id}
-            data = {comment}
+            comment = {comment}
           />
         ))}
       </ul>
