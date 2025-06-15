@@ -3,12 +3,11 @@ import iconMinus from "../assets/icon-minus.svg";
 import iconReply from "../assets/icon-reply.svg";
 import deleteIcon from "../assets/icon-delete.svg";
 import editIcon from "../assets/icon-edit.svg";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import DeleteModal from "./DeleteModal";
 import Form from "./Form";
-import { div } from "framer-motion/client";
 
-function Comment({comment, isReply}) {
+function Comment({comment, isReply, ogUser}) {
   const {user, createdAt, content, score, replies, id} = comment;
   const [currentScore, setCurrentScore] = useState(score);
   const originalScore = score;
@@ -60,7 +59,7 @@ function Comment({comment, isReply}) {
         </div>
         <p className="text-gray-500 my-4">
           <span className="inline-block text-blue-700 font-bold mr-2">
-            {isReply ? `@${user.username}` : ""}
+            {isReply ? `@${ogUser}` : ""}
           </span> 
             {content}
         </p>
@@ -109,6 +108,7 @@ function Comment({comment, isReply}) {
         <div className="mb-4">
           <Form 
             isReply = {true}
+            id = {currentId}
           />
         </div>
       }
@@ -118,6 +118,7 @@ function Comment({comment, isReply}) {
             key={reply.id}
             comment={reply}
             isReply={true}
+            ogUser = {user.username} // get the name of the user who's comment is getting replied on
           />
         ))}
       </ul>

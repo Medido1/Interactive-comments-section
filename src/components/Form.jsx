@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import userAvatar from "/avatars/image-juliusomo.png";
 import {GlobalContext} from "../context/GlobalContext";
 
-function Form({isReply}){
+function Form({isReply, id}){
   const {data, setData} = useContext(GlobalContext)
   const [comment, setComment] = useState("")
 
@@ -17,7 +17,7 @@ function Form({isReply}){
       if (comment.replies) {
         comment.replies.forEach(reply => {
           if (reply.id > lastId) {
-            lastId = comment.id;
+            lastId =reply.id;
           }
         })
       }
@@ -46,14 +46,50 @@ function Form({isReply}){
       },
       replies: [],
     }
+    
     updatedComments = [...data.comments, newComment]
+    setData(prev => ({...prev, comments: updatedComments}));
+    setComment("");
+  }
+
+  function submitReply(e) {
+    e.preventDefault();
+    let updatedReplies = [];
+
+    if (comment.trim() === ""){
+      alert("comment cannot be empty!!");
+      return;
+    }
+    const currentComment = data.comments.find(comment => comment.id === id);
+    
+    const newReply = {
+      id: getNextId(data),
+      content : comment,
+      score: 0,
+      user : {
+        "image": { 
+        "png": "/avatars/image-juliusomo.png",
+        "webp": "/avatars/image-juliusomo.webp"
+        },
+        "username": "juliusomo"
+      },
+    }
+    updatedReplies = [...currentComment.replies, newReply];
+    
+    const updatedComments = data.comments.map(userComment => {
+      return userComment.id === id ? 
+      {
+        ...currentComment,
+        replies: updatedReplies
+      } : userComment
+    })
     setData(prev => ({...prev, comments: updatedComments}));
     setComment("");
   }
 
   return (
     <form 
-      onSubmit={submitComment}
+      onSubmit={isReply ? submitReply : submitComment}
       className="bg-white p-4">
       <label htmlFor="comment" className="sr-only">Add a comment</label>
       <textarea 
