@@ -1,10 +1,10 @@
 import iconPlus from "../assets/icon-plus.svg";
 import iconMinus from "../assets/icon-minus.svg";
 import iconReply from "../assets/icon-reply.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Comment({data}) {
-  const {user, createdAt, content, score} = data;
+  const {user, createdAt, content, score, replies} = data;
   const [currentScore, setCurrentScore] = useState(score);
   const originalScore = score;
 
@@ -19,41 +19,50 @@ function Comment({data}) {
   }
 
   return (
-    <div className="bg-white p-4 rounded-lg mb-4">
-      <div className="flex gap-4 items-center">
-        <img
-          className="h-10"
-          src={user.image.webp} alt={`${user.username} avatar`}
-        />
-        <p className="font-bold">{user.username}</p>
-        <p>{createdAt}</p>
-      </div>
-      <p className="text-gray-500 my-4">
-        {content}
-      </p>
-      <div className="flex justify-between">
-        <div className="flex justify-between p-2 items-center gap-2 w-[30%] rounded-md
-          bg-gray-100">
-          <button 
-            onClick={incrementScore}
-            className="cursor-pointer">
-            <img src={iconPlus} alt="icon plus" />
-          </button>
-          <p className="text-blue-700 text-lg font-bold">{currentScore}</p>
-          <button
-            onClick={decrementScore}
-            className="cursor-pointer">
-            <img src={iconMinus} alt="icon minus" />
-          </button>
+    <div className="bg-gray-100">
+      <div className="bg-white p-4 rounded-lg mb-4">
+        <div className="flex gap-4 items-center">
+          <img
+            className="h-10"
+            src={user.image.webp} alt={`${user.username} avatar`}
+          />
+          <p className="font-bold">{user.username}</p>
+          <p>{createdAt}</p>
         </div>
-        <div 
-  
-          className="flex items-center gap-2 text-blue-700 font-bold text-lg
-            cursor-pointer">
-          <img src={iconReply} alt="reply icon" />
-          <p>Reply</p>
+        <p className="text-gray-500 my-4">
+          {content}
+        </p>
+        <div className="flex justify-between">
+          <div className="flex justify-between p-2 items-center gap-2 w-[30%] rounded-md
+            bg-gray-100">
+            <button
+              onClick={incrementScore}
+              className="cursor-pointer">
+              <img src={iconPlus} alt="icon plus" />
+            </button>
+            <p className="text-blue-700 text-lg font-bold">{currentScore}</p>
+            <button
+              onClick={decrementScore}
+              className="cursor-pointer">
+              <img src={iconMinus} alt="icon minus" />
+            </button>
+          </div>
+          <div
+            className="flex items-center gap-2 text-blue-700 font-bold text-lg
+              cursor-pointer">
+            <img src={iconReply} alt="reply icon" />
+            <p>Reply</p>
+          </div>
         </div>
       </div>
+      <ul className="pl-4 shadow-lg">
+        {replies && replies.map(reply => (
+          <Comment 
+            key={reply.id}
+            data={reply}
+          />
+        ))}
+      </ul>
     </div>
   )
 }
