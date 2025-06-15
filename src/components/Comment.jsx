@@ -4,14 +4,17 @@ import iconReply from "../assets/icon-reply.svg";
 import deleteIcon from "../assets/icon-delete.svg";
 import editIcon from "../assets/icon-edit.svg";
 import {useState, useContext } from "react";
-import {GlobalContext} from "../context/GlobalContext";
+import DeleteModal from "./DeleteModal";
 
 function Comment({comment, isReply}) {
-  const {data, setData} = useContext(GlobalContext)
   const {user, createdAt, content, score, replies, id} = comment;
   const [currentScore, setCurrentScore] = useState(score);
   const originalScore = score;
   const currentUser =  "juliusomo";
+
+  /* show modal */
+  const [showModal, setShowModal] = useState(false); 
+  const [currentId, setCurrentId] = useState("");
 
   function incrementScore() {
     if (currentScore > originalScore) return;
@@ -24,29 +27,13 @@ function Comment({comment, isReply}) {
   }
   
   function deleteComment(id) {
-    const isComment = data.comments.some(comment => comment.id === id);
-
-    if (isComment) {
-      const updatedComments = data.comments.filter(comment => comment.id !== id);
-      setData(prev => ({...prev, comments: updatedComments}))
-      return;
-    }
-
-    // if its a reply
-    const updatedComments = data.comments.map(comment => {
-      if (comment.replies) {
-        const filtredReplies = comment.replies.filter(reply => reply.id !== id);
-        return {...comment, replies: filtredReplies}
-      }
-      return comment
-    })
-
-    setData(prev => ({...prev, comments: updatedComments}))
+    setShowModal(true);
+    setCurrentId(id)
   }
 
   return (
     <div className="bg-gray-100">
-      <div className="bg-white p-4 rounded-lg mb-4">
+      <div className="bg-white p-4 rounded-lg mb-4 relative">
         <div className="flex gap-4 items-center">
           <img
             className="h-10"
@@ -106,7 +93,7 @@ function Comment({comment, isReply}) {
           }
         </div>
       </div>
-      <ul className="pl-4 shadow-lg">
+      <ul className="pl-4 shadow-lg relative">
         {replies && replies.map(reply => (
           <Comment 
             key={reply.id}
@@ -115,6 +102,17 @@ function Comment({comment, isReply}) {
           />
         ))}
       </ul>
+      {showModal && 
+        <div>
+          <div className="fixed inset-0 bg-black/25 z-40"></div>
+          <div className="absolute top-[20%] z-40">
+            <DeleteModal 
+              setShowModal = {setShowModal}
+              id = {currentId}
+            />
+          </div>
+        </div>
+        }
     </div>
   )
 }
