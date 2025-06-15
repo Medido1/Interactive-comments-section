@@ -5,6 +5,7 @@ import deleteIcon from "../assets/icon-delete.svg";
 import editIcon from "../assets/icon-edit.svg";
 import {useState, useContext } from "react";
 import DeleteModal from "./DeleteModal";
+import { AnimatePresence } from 'framer-motion';
 
 function Comment({comment, isReply}) {
   const {user, createdAt, content, score, replies, id} = comment;
@@ -112,7 +113,7 @@ function Comment({comment, isReply}) {
             />
           </div>
         </div>
-        }
+      }
     </div>
   )
 }
