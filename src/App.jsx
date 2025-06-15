@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import './App.css'
 import Comment from './components/Comment';
+import Form from './components/Form';
 import {GlobalContext} from "./context/GlobalContext";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           />
         ))}
       </ul>
+      <Form />
     </main>
   )
 }
