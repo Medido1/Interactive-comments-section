@@ -1,6 +1,7 @@
 //icons imports 
 import iconPlus from "../assets/icon-plus.svg";
 import iconMinus from "../assets/icon-minus.svg";
+import iconReply from "../assets/icon-reply.svg";
 
 import { GlobalContext } from "../context/GlobalContext";
 import { useContext, useEffect, useState } from "react";
@@ -52,6 +53,16 @@ function CommentComp({ comment }) {
               <img src={iconMinus} alt="icon minus" />
             </button>
           </div>
+          {user.username !== currentUser && 
+            <button
+              onClick={() => replyToComment(id)}
+              type="button"
+              className="flex items-center gap-2 text-blue-700 font-bold text-lg
+                cursor-pointer">
+              <img src={iconReply} alt="reply icon" />
+              <p>Reply</p>
+            </button>
+          }
         </div>
       </div>
     </div>
