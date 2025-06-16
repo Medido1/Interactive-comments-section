@@ -16,6 +16,7 @@ function CommentComp({ comment }) {
             src={user.image.webp} alt={`${user.username} avatar`} 
           />
           <p className="font-bold">{user.username}</p>
+          <p className="text-gray-500">{createdAt}</p>
         </div>
       </div>
     </div>
