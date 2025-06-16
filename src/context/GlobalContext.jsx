@@ -12,7 +12,7 @@ export const GlobalProvider = ({children}) => {
     fetch('/data.json')
       .then((res) => res.json())
       .then((json) => setData(json))
-      .catch((error) => console.error("fetch error:", error))
+      .catch((error) => console.log("fetch error:", error))
   }, [])
 
   useEffect(() => {
@@ -20,7 +20,11 @@ export const GlobalProvider = ({children}) => {
     localStorage.setItem("localData", JSON.stringify(data));
   }, [data])
 
-  const currentUser = data.currentUser.username
+  let currentUser;
+  if (data.currentUser){
+    currentUser = data.currentUser.username
+  }
+  
   return (
     <GlobalContext.Provider value={{data, setData, currentUser}}>
       {children}
