@@ -33,10 +33,13 @@ function CommentComp({ comment }) {
           <p className="font-bold">{user.username}</p>
           <p className="text-gray-500">{createdAt}</p>
         </div>
+        <p className="text-gray-500 my-4">
+          {content}
+        </p>
         <div className="flex justify-between">
           <div  
             className="flex justify-between p-2 items-center gap-2 w-[30%] rounded-md
-            bg-gray-100 mt-4">
+            bg-gray-100">
             <button
               onClick={incrementScore}
               className="cursor-pointer">
