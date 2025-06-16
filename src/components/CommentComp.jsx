@@ -7,7 +7,7 @@ import { GlobalContext } from "../context/GlobalContext";
 import { useContext, useEffect, useState } from "react";
 
 function CommentComp({ comment }) {
-  const { user, createdAt, content, score, replies, id } = comment;
+  const { user, createdAt, content, score, replies, id, replyingTo } = comment;
   const { currentUser } = useContext(GlobalContext);
 
   // score logic
@@ -35,6 +35,10 @@ function CommentComp({ comment }) {
           <p className="text-gray-500">{createdAt}</p>
         </div>
         <p className="text-gray-500 my-4">
+          {replyingTo && 
+            <span className="inline-block text-blue-700 font-bold mr-2">
+              {replyingTo}
+            </span>}
           {content}
         </p>
         <div className="flex justify-between">
@@ -65,6 +69,14 @@ function CommentComp({ comment }) {
           }
         </div>
       </div>
+      <ul className="pl-4 shadow-lg relative">
+        {replies?.map(reply => (
+          <CommentComp 
+            key={reply.id}
+            comment={reply}
+          />
+        ))}
+      </ul>
     </div>
   );
 }
