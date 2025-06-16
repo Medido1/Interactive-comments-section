@@ -20,8 +20,9 @@ export const GlobalProvider = ({children}) => {
     localStorage.setItem("localData", JSON.stringify(data));
   }, [data])
 
+  const currentUser = data.currentUser.username
   return (
-    <GlobalContext.Provider value={{data, setData}}>
+    <GlobalContext.Provider value={{data, setData, currentUser}}>
       {children}
     </GlobalContext.Provider>
   )
