@@ -2,13 +2,17 @@
 import iconPlus from "../assets/icon-plus.svg";
 import iconMinus from "../assets/icon-minus.svg";
 import iconReply from "../assets/icon-reply.svg";
+import deleteIcon from '../assets/icon-delete.svg';
 
 import { GlobalContext } from "../context/GlobalContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import DeleteModal from "./DeleteModal";
 
 function CommentComp({ comment }) {
   const { user, createdAt, content, score, replies, id, replyingTo } = comment;
   const { currentUser } = useContext(GlobalContext);
+  const [currentId, setCurrentId] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // score logic
   const [currentScore, setCurrentScore] = useState(score);
@@ -23,6 +27,13 @@ function CommentComp({ comment }) {
     if (currentScore < originalScore) return;
     setCurrentScore(prev => prev - 1);
   }
+
+  /* delete comment */
+  function deleteComment(id) {
+    setCurrentId(id);
+    setShowDeleteModal(true);
+  }
+
   return (
     <div className="bg-gray-100 relative">
       <div className="bg-white p-4 rounded-lg mb-4 ">
@@ -73,6 +84,16 @@ function CommentComp({ comment }) {
               <p>Reply</p>
             </button>
           }
+          {user.username === currentUser && 
+            <div className="flex gap-4">
+              <button 
+                onClick={() => deleteComment(id)}
+                className="flex items-center gap-2 cursor-pointer">
+                <img src={deleteIcon} alt="delete icon" />
+                <p className="text-red-400 font-bold text-lg">Delete</p>
+              </button>
+          </div>
+          }
         </div>
       </div>
       <ul className="pl-4 shadow-lg relative">
@@ -83,6 +104,16 @@ function CommentComp({ comment }) {
           />
         ))}
       </ul>
+      {showDeleteModal && 
+      <div>
+        <div className="fixed inset-0 bg-black/25 z-40"></div>
+        <div className="absolute top-[20%] z-40">
+          <DeleteModal 
+            setShowDeleteModal = {setShowDeleteModal}
+            id = {currentId}
+          />
+        </div>
+    </div>}
     </div>
   );
 }
