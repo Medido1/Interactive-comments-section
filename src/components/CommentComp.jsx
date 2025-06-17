@@ -7,12 +7,14 @@ import deleteIcon from '../assets/icon-delete.svg';
 import { GlobalContext } from "../context/GlobalContext";
 import { useContext, useState } from "react";
 import DeleteModal from "./DeleteModal";
+import ReplyForm from "./replyForm";
 
 function CommentComp({ comment }) {
   const { user, createdAt, content, score, replies, id, replyingTo } = comment;
   const { currentUser } = useContext(GlobalContext);
   const [currentId, setCurrentId] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showReplyForm, setShowReplyForm] = useState(false);
 
   // score logic
   const [currentScore, setCurrentScore] = useState(score);
@@ -32,6 +34,12 @@ function CommentComp({ comment }) {
   function deleteComment(id) {
     setCurrentId(id);
     setShowDeleteModal(true);
+  }
+
+  /* reply to commment */
+  function replyToComment(id) {
+    setShowReplyForm(true);
+    setCurrentId(id);
   }
 
   return (
@@ -96,6 +104,13 @@ function CommentComp({ comment }) {
           }
         </div>
       </div>
+      {showReplyForm && 
+        <div className="mb-4">
+          <ReplyForm
+            id = {currentId}
+          />
+        </div>
+      }
       <ul className="pl-4 shadow-lg relative">
         {replies?.map(reply => (
           <CommentComp 
