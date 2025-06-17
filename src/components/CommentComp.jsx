@@ -62,7 +62,7 @@ function CommentComp({ comment }) {
         <p className="text-gray-500 my-4">
           {replyingTo && 
             <span className="inline-block text-blue-700 font-bold mr-2">
-              {replyingTo}
+              @{replyingTo}
             </span>}
           {content}
         </p>
@@ -108,6 +108,7 @@ function CommentComp({ comment }) {
         <div className="mb-4">
           <ReplyForm
             id = {currentId}
+            setShowReplyForm = {setShowReplyForm}
           />
         </div>
       }
