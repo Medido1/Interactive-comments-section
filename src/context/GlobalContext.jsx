@@ -8,7 +8,7 @@ export const GlobalProvider = ({children}) => {
   })
 
   useEffect(() => {
-    if (Object.keys(data).length > 0) return; //in case data state exists no need to fetch
+    if (data && data.comments) return; //in case data state exists no need to fetch
     fetch('/data.json')
       .then((res) => res.json())
       .then((json) => setData(json))
@@ -20,11 +20,8 @@ export const GlobalProvider = ({children}) => {
     localStorage.setItem("localData", JSON.stringify(data));
   }, [data])
 
-  let currentUser;
-  if (data.currentUser){
-    currentUser = data.currentUser.username
-  }
-  
+  const currentUser = data.currentUser ? data.currentUser.username : null
+
   // disable edit buttons when editing comment
   const [disabledButtons, setDisabledButtons] = useState(false); 
   return (
