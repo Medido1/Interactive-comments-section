@@ -28,7 +28,7 @@ function DeleteModal({setShowDeleteModal, id}) {
 
   return (
     <AnimatePresence>
-      <motion.div className="p-4 bg-white rounded-lg"
+      <motion.div className="p-4 bg-white rounded-lg max-w-[300px]"
         initial={{ scale: 0.9, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.9, y: 20, opacity: 0 }}

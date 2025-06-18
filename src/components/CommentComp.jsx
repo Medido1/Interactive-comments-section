@@ -194,7 +194,7 @@ function CommentComp({ comment }) {
       {showDeleteModal && 
       <div>
         <div className="fixed inset-0 bg-black/25 z-40"></div>
-        <div className="absolute top-[20%] z-40">
+        <div className="absolute top-[20%] md:top-0 md:left-1/2 -translate-x-1/2 z-40">
           <DeleteModal 
             setShowDeleteModal = {setShowDeleteModal}
             id = {currentId}
