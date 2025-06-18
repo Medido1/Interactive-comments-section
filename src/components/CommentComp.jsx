@@ -91,11 +91,10 @@ function CommentComp({ comment }) {
     setDisabledButtons(true);
   }
 
-
   return (
     <div className="bg-gray-100 relative">
-      <div className="bg-white p-4 rounded-lg mb-4 ">
-        <div className="flex gap-4 items-center">
+      <div className="bg-white p-4 rounded-lg mb-4 relative max-w-[1000px]">
+        <div className="flex gap-4 items-center md:ml-20">
           <img 
             className="h-10"
             src={user.image.webp} alt={`${user.username} avatar`} 
@@ -118,7 +117,7 @@ function CommentComp({ comment }) {
         }
         {!showEditForm && 
           <>
-            <p className="text-gray-500 my-4">
+            <p className="text-gray-500 my-4 md:ml-20">
               {replyingTo && 
                 <span className="inline-block text-blue-700 font-bold mr-2">
                   @{replyingTo}
@@ -128,7 +127,7 @@ function CommentComp({ comment }) {
             <div className="flex justify-between">
               <div  
                 className="flex justify-between p-2 items-center gap-2 w-[30%] rounded-md
-              bg-gray-100">
+              bg-gray-100 md:flex-col md:w-[5%] md:h-[80%] md:absolute md:left-2 md:top-4">
                 <button
                   disabled ={disabledButtons}
                   onClick={incrementScore}
@@ -149,13 +148,13 @@ function CommentComp({ comment }) {
                   onClick={() => replyToComment(id)}
                   type="button"
                   className="flex items-center gap-2 text-blue-700 font-bold text-lg
-                    cursor-pointer">
+                    cursor-pointer md:absolute md:right-4 md:top-4 hover:text-blue-500">
                   <img src={iconReply} alt="reply icon" />
                   <p>Reply</p>
                 </button>
               }
               {user.username === currentUser && 
-                <div className="flex gap-4">
+                <div className="flex gap-4 md:absolute md:top-4 md:right-4">
                   <button 
                     disabled ={disabledButtons}
                     onClick={() => deleteComment(id)}
