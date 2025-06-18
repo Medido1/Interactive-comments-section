@@ -6,16 +6,17 @@ import CommentForm from "./components/CommentForm";
 
 function App() {
   const { data } = useContext(GlobalContext);
+  const sortedComments = [...data.comments].sort((a, b) => b.score - a.score)
   return (
     <main className="bg-gray-100 min-h-screen px-4 py-6">
-      <ul>
-        {data.comments?.map(comment => (
+      <div>
+        {sortedComments.map(comment => (
           <CommentComp 
             key={comment.id}
             comment={comment}
           />
         ))}
-      </ul>
+      </div>
       <CommentForm />
     </main>
   );
