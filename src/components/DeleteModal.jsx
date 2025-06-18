@@ -7,20 +7,22 @@ function DeleteModal({setShowDeleteModal, id}) {
 
   function confirmDelete(id) {
     setShowDeleteModal(false);
-    let updatedComments = [];
 
-    const isComment = data.comments.some(comment => comment.id === id);
-    if (isComment) {
-      updatedComments = data.comments.filter(comment => comment.id !== id)
-    } else {
-      updatedComments = data.comments.map(comment => {
+    function deleteComment(comments, id) {
+      return comments.map(comment => {
+        if (comment.id === id) {
+          return null;
+        }
         if (comment.replies) {
-          const filterdReplies = comment.replies.filter(reply => reply.id !== id)
-          return {...comment, replies: filterdReplies}
+          const updatedReplies = deleteComment(comment.replies, id);
+          return {...comment, replies: updatedReplies}
         }
         return comment
       })
+      .filter(Boolean)
     }
+
+    const updatedComments = deleteComment(data.comments, id)
     setData(prev => ({...prev, comments: updatedComments}))
   }
 
