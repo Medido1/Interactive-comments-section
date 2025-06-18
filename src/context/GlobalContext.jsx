@@ -25,8 +25,11 @@ export const GlobalProvider = ({children}) => {
     currentUser = data.currentUser.username
   }
   
+  // disable edit buttons when editing comment
+  const [disabledButtons, setDisabledButtons] = useState(false); 
   return (
-    <GlobalContext.Provider value={{data, setData, currentUser}}>
+    <GlobalContext.Provider value={{data, setData,
+     currentUser, disabledButtons, setDisabledButtons}}>
       {children}
     </GlobalContext.Provider>
   )

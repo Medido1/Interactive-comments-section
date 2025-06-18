@@ -83,6 +83,7 @@ function ReplyForm({id, setShowReplyForm}) {
     setCommentText("");
     setShowReplyForm(false);
   }
+  
   return (
     <form 
       onSubmit={submitReply}
