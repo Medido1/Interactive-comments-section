@@ -71,6 +71,7 @@ function CommentComp({ comment }) {
           <EditForm 
             commentText = {content}
             setShowEditForm = {setShowEditForm}
+            id = {currentId}
           />
         }
         {!showEditForm && 
