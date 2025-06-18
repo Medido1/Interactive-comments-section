@@ -1,29 +1,11 @@
 import { useState, useContext, useEffect } from "react";
 import userAvatar from "/avatars/image-juliusomo.png"
 import {GlobalContext} from "../context/GlobalContext";
+import { getNextId } from "./utility";
 
 function CommentForm() {
   const [commentText, setCommentText] = useState("");
   const {data, setData} = useContext(GlobalContext)
-
-  function getNextId(data) { /* get the id of the new comment */
-    if (!data.comments || data.comments.length === 0) return 1;
-    let lastId = - Infinity;
-    
-    function traverseComments(comments) {
-      for (let comment of comments) {
-        if (comment.id > lastId) {
-          lastId = comment.id
-        }
-        if (comment.replies) {
-          traverseComments(comment.replies)
-        }
-      }
-    }
-
-    traverseComments(data.comments)
-    return lastId + 1;
-  }
 
   function submitComment(e) {
     e.preventDefault();

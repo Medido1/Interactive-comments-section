@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import userAvatar from "/avatars/image-juliusomo.webp"
 import {GlobalContext} from "../context/GlobalContext";
+import { getNextId } from "./utility";
 
 function ReplyForm({id, setShowReplyForm}) {
   const [commentText, setCommentText] = useState("");
@@ -30,24 +31,6 @@ function ReplyForm({id, setShowReplyForm}) {
     if (!commentText.trim()) {
       alert("Write something damn it!!")
       return;
-    }
-
-    function getNextId(data) { /* get the id of the new reply */
-      let lastId = - Infinity;
-      
-      function traverseComments(comments) {
-        for (let comment of comments) {
-          if (comment.id > lastId) {
-            lastId = comment.id
-          }
-          if (comment.replies) {
-            traverseComments(comment.replies)
-          }
-        }
-      }
-
-      traverseComments(data.comments)
-      return lastId + 1;
     }
 
     function findUserById(comments){ /* find the user being replied to */
