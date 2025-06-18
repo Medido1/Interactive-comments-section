@@ -70,6 +70,7 @@ function CommentComp({ comment }) {
         {showEditForm && 
           <EditForm 
             commentText = {content}
+            setShowEditForm = {setShowEditForm}
           />
         }
         {!showEditForm && 
@@ -86,12 +87,14 @@ function CommentComp({ comment }) {
                 className="flex justify-between p-2 items-center gap-2 w-[30%] rounded-md
               bg-gray-100">
                 <button
+                  disabled ={disabledButtons}
                   onClick={incrementScore}
                   className="cursor-pointer">
                   <img src={iconPlus} alt="icon plus" />
                 </button>
                 <p className="text-blue-700 text-lg font-bold">{currentScore}</p>
                 <button
+                  disabled ={disabledButtons}
                   onClick={decrementScore}
                   className="cursor-pointer">
                   <img src={iconMinus} alt="icon minus" />
@@ -99,6 +102,7 @@ function CommentComp({ comment }) {
               </div>
               {user.username !== currentUser && 
                 <button
+                  disabled ={disabledButtons}
                   onClick={() => replyToComment(id)}
                   type="button"
                   className="flex items-center gap-2 text-blue-700 font-bold text-lg
@@ -110,6 +114,7 @@ function CommentComp({ comment }) {
               {user.username === currentUser && 
                 <div className="flex gap-4">
                   <button 
+                    disabled ={disabledButtons}
                     onClick={() => deleteComment(id)}
                     className="flex items-center gap-2 cursor-pointer">
                     <img src={deleteIcon} alt="delete icon" />

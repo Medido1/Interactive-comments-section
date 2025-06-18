@@ -1,12 +1,14 @@
 import { useState, useContext } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 
-
-function EditForm({commentText}) {
+function EditForm({commentText, setShowEditForm}) {
   const [commentContent, setCommentContent] = useState(commentText)
   const {setDisabledButtons } = useContext(GlobalContext);
 
-  
+  function cancelEdit() {
+    setShowEditForm(false)
+    setDisabledButtons(false)
+  }
   return (
     <form className="flex flex-col">
       <label htmlFor="commentText" className="sr-only">Edit comment</label>
@@ -19,6 +21,8 @@ function EditForm({commentText}) {
         onChange={(e) => setCommentContent(e.target.value)}></textarea>
       <div className="flex gap-4 self-end">
         <button 
+          onClick={cancelEdit}
+          type="button"
           className="bg-gray-200 p-2 rounded-lg cursor-pointer
           hover:bg-gray-400 font-bold">
           Cancel
