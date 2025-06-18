@@ -2,6 +2,7 @@ import "./App.css";
 import { useContext } from "react";
 import { GlobalContext } from "./context/GlobalContext";
 import CommentComp from "./components/CommentComp";
+import CommentForm from "./components/CommentForm";
 
 function App() {
   const { data } = useContext(GlobalContext);
@@ -15,6 +16,7 @@ function App() {
           />
         ))}
       </ul>
+      <CommentForm />
     </main>
   );
 }
