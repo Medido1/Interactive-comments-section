@@ -35,7 +35,7 @@ function CommentForm() {
     const newComment = {
       id: getNextId(data),
       content : commentText,
-      createdAt: "just now",
+      createdAt: new Date().toISOString(), // use time stamp
       score: 0,
       user: {
         "image": { 

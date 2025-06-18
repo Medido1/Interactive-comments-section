@@ -21,6 +21,31 @@ function CommentComp({ comment }) {
   const [showEditForm, setShowEditForm] = useState(false);
   const [originalScore, setOriginalScore] = useState(score);
 
+   /* format time */
+   function formatTime(time) {
+    const seconds = Math.floor((new Date() - new Date(time)) / 1000);
+
+    const intervals = [
+      { label: "year", seconds: 31536000 },
+      { label: "month", seconds: 2592000 },
+      { label: "week", seconds: 604800 },
+      { label: "day", seconds: 86400 },
+      { label: "hour", seconds: 3600 },
+      { label: "minute", seconds: 60 },
+      { label: "second", seconds: 1 },
+    ];
+
+    for (let i = 0; i < intervals.length; i++) {
+      const interval = intervals[i];
+      const count = Math.floor(seconds / interval.seconds);
+      if (count >= 1) {
+        return `${count} ${interval.label}${count !== 1 ? "s" : ""} ago`;
+      }
+    }
+    return "just now";
+  }
+
+
   //update the score in data
   function updateScore(id, delta) {
     const updatedComments = data.comments.map(comment => {
@@ -82,7 +107,7 @@ function CommentComp({ comment }) {
               <p>you</p>
             </div>
           }
-          <p className="text-gray-500">{createdAt}</p>
+          <p className="text-gray-500">{formatTime(createdAt)}</p>
         </div>
         {showEditForm && 
           <EditForm 
