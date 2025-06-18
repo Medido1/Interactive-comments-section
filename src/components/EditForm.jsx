@@ -37,7 +37,6 @@ function EditForm({commentText, setShowEditForm, id}) {
 
     const updatedComments = findComment(data.comments);
     setData(prev => ({...prev, comments: updatedComments}))
-    setCommentContent("");
     setShowEditForm(false)
     setDisabledButtons(false)
   }
