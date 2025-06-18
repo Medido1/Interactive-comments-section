@@ -13,24 +13,41 @@ import EditForm from "./EditForm";
 
 function CommentComp({ comment }) {
   const { user, createdAt, content, score, replies, id, replyingTo } = comment;
-  const { currentUser, disabledButtons, setDisabledButtons } = useContext(GlobalContext);
+  const { currentUser, disabledButtons, setDisabledButtons,
+    data, setData} = useContext(GlobalContext);
   const [currentId, setCurrentId] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
+  const [originalScore, setOriginalScore] = useState(score);
 
-  // score logic
-  const [currentScore, setCurrentScore] = useState(score);
-  const originalScore = score
+  //update the score in data
+  function updateScore(id, delta) {
+    const updatedComments = data.comments.map(comment => {
+      if (comment.id === id) {
+        return {...comment, score: comment.score + delta}
+      }
+      if (comment.replies) {
+        return {
+          ...comment,
+          replies: comment.replies.map(reply => {
+            return reply.id === id ? {...reply, score: reply.score + delta} : reply
+          })
+        }
+      }
+      return comment
+    })
+    setData(prev => ({...prev, comments: updatedComments}))
+  }
 
   function incrementScore() {
-    if (currentScore > originalScore) return;
-    setCurrentScore(prev => prev + 1);
+    if (score > originalScore) return;
+    updateScore(id, +1)
   }
 
   function decrementScore() {
-    if (currentScore < originalScore) return;
-    setCurrentScore(prev => prev - 1);
+    if (score < originalScore) return;
+    updateScore(id, -1)
   }
 
   function deleteComment(id) {
@@ -93,7 +110,7 @@ function CommentComp({ comment }) {
                   className="cursor-pointer">
                   <img src={iconPlus} alt="icon plus" />
                 </button>
-                <p className="text-blue-700 text-lg font-bold">{currentScore}</p>
+                <p className="text-blue-700 text-lg font-bold">{score}</p>
                 <button
                   disabled ={disabledButtons}
                   onClick={decrementScore}

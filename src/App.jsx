@@ -6,7 +6,8 @@ import CommentForm from "./components/CommentForm";
 
 function App() {
   const { data } = useContext(GlobalContext);
-  const sortedComments = [...data.comments].sort((a, b) => b.score - a.score)
+
+  const sortedComments = data.comments ? [...data.comments].sort((a, b) => b.score - a.score): []
   return (
     <main className="bg-gray-100 min-h-screen px-4 py-6">
       <div>
