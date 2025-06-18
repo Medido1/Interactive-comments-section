@@ -1,12 +1,54 @@
-# React + Vite
+# Frontend Mentor - Interactive comments section solution
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a solution to the [Interactive comments section challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/interactive-comments-section-iG1RugEG9).
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of contents
 
-## Expanding the ESLint configuration
+- [Overview](#overview)
+  - [Screenshot](#screenshot)
+  - [The challenge](#the-challenge)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+- [Author](#author)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Overview
+
+### Screenshot
+
+  ## Desktop 
+  ![](./src/screenshots/desktopScreenShot.png)
+  ## Mobile
+  ![](./src/screenshots/mobileScreenShot.png)
+
+### The challenge
+
+Users should be able to:
+
+  - View the optimal layout for the app depending on their device's screen size
+  - See hover states for all interactive elements on the page
+  - Create, Read, Update, and Delete comments and replies
+  - Upvote and downvote comments
+  - **Bonus**: If you're building a purely front-end project, use `localStorage` to save the current state in the browser that persists when the browser is refreshed.
+  - **Bonus**: Instead of using the `createdAt` strings from the `data.json` file, try using timestamps and dynamically track the time since the comment or reply was posted.
+
+### Links
+
+- Solution URL: [solution](https://github.com/Medido1/Interactive-comments-section)
+- Live Site URL: [live site](https://interactivecommentssectionfront.netlify.app/)
+
+## My process
+
+### Built with
+
+- React
+- Tailwindcss
+- Flexbox
+- Grid
+- Mobile-first workflow
+
+## Author
+
+- Frontend Mentor - [@Medido1](https://www.frontendmentor.io/profile/Medido1)
+- GitHub - [@Medido1](https://github.com/Medido1)
