@@ -39,7 +39,7 @@ function CommentForm() {
       className="bg-white p-4 max-w-[1000px] relative">
       <label htmlFor="commentText" className="sr-only">Add a comment</label>
       <textarea 
-        className="border-gray-200 border p-4 rounded-lg mb-4 md:w-[80%] md:ml-20" 
+        className="border-gray-200 border p-4 rounded-lg mb-4 md:w-[76%] lg:w-[80%] md:ml-20" 
         name="commentText" id="commentText"
         rows="3"
         cols="30"
